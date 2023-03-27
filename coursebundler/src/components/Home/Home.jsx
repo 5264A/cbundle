@@ -12,7 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import "./Home.css";
 import vg from "../../assets/images/front1.png";
-import introVideo from "../../assets/videos/intro1.mp4"
+import introVideo from "../../assets/videos/intro.mp4"
 import { CgGoogle, CgYoutube } from 'react-icons/cg';
 import { SiCoursera, SiUdemy } from 'react-icons/si';
 import { DiAws } from 'react-icons/di';
@@ -37,7 +37,7 @@ const Home = () => {
                   fontSize={'2xl'}
                   fontFamily="cursive"
                   textAlign={['center', 'left']}
-                  children="Find Valuable Content At Reasonable Price"
+                  children="Find Valuable Content At 11₹ /-"
                 />
                 <Link to="/courses">
                   <Button size={'lg'} colorScheme = "yellow">
@@ -76,6 +76,7 @@ const Home = () => {
 
       <div className="container2">
         <video
+          autoPlay
           controls
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
