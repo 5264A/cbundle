@@ -76,6 +76,7 @@ const Home = () => {
 
       <div className="container2">
         <video
+          muted
           autoPlay
           controls
           controlsList="nodownload nofullscreen noremoteplayback"

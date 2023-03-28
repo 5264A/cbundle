@@ -4,17 +4,13 @@ import {RiDashboardFill, RiLogoutBoxLine, RiMenu5Fill} from 'react-icons/ri'
 import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, HStack, useDisclosure, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const LinkButton = ({url= '/' , title = 'Home'}) => (
-     <Link to = {url}>
+const LinkButton = ({url= '/' , title = 'Home' , onClose}) => (
+     <Link onClick={onClose} to = {url}>
           <Button variant={'ghost'}>
               {title}
           </Button>
      </Link>
 )
-
-const logoutHandler = () => {
-      console.log("LOGOUT SUCCESSFULLY")
-}
 
 
 const Header = () => {
@@ -23,6 +19,13 @@ const Header = () => {
   const user = {
      role:'admin'
   }
+
+  const logoutHandler = () => {
+    console.log("LOGOUT SUCCESSFULLY");
+    onClose();
+  }
+
+  
   return (
     <>
       <ColorModeSwitcher/>
@@ -44,11 +47,11 @@ const Header = () => {
                 <DrawerHeader borderBottomWidth={'2px'}>Garib-Sikshha</DrawerHeader>
                   <DrawerBody>
                        <VStack spacing={'8'} alignItems={'flex-start'}>
-                           <LinkButton url = '/' title =  "Home" />
-                           <LinkButton url = '/courses' title = "Browse All Courses" />
-                           <LinkButton url = '/request' title = "Request a Course" />
-                           <LinkButton url = '/contact' title =  "Contact Us" />
-                           <LinkButton url = '/about' title =  "About" />
+                           <LinkButton url = '/' title =  "Home" onClose={onClose} />
+                           <LinkButton url = '/courses' title = "Browse All Courses"  onClose={onClose}/>
+                           <LinkButton url = '/request' title = "Request a Course"  onClose={onClose}/>
+                           <LinkButton url = '/contact' title =  "Contact Us"  onClose={onClose}/>
+                           <LinkButton url = '/about' title =  "About"  onClose={onClose}/>
                        </VStack>
 
                        <HStack
@@ -61,7 +64,7 @@ const Header = () => {
                           isAuthenticated ? (<>
                               <VStack>
                                   <HStack>
-                                    <Link to = '/profile'>
+                                    <Link onClick={onClose} to = '/profile'>
                                        <Button variant={'ghost'} colorScheme={'yellow'}>Profile</Button>  
                                     </Link> 
                                     <Button onClick={logoutHandler} variant={'ghost'}>
@@ -71,7 +74,7 @@ const Header = () => {
                                   </HStack>
                                   {
                                     user && user.role === 'admin' && (
-                                       <Link to = '/admin/dashboard'>
+                                       <Link onClick={onClose} to = '/admin/dashboard'>
                                           <Button colorScheme={'purple'} variant="ghost">
                                               <RiDashboardFill style={{margin:"4px"}} />
                                                 Dashboard
@@ -81,11 +84,11 @@ const Header = () => {
                                   }
                               </VStack>
                           </>) : (<>
-                            <Link to = '/login'>
+                            <Link onClick={onClose} to = '/login'>
                                <Button colorScheme={'yellow'}>Login</Button>  
                             </Link>
                             <p>OR</p>
-                            <Link to = '/register'>
+                            <Link onClick={onClose} to = '/register'>
                                <Button colorScheme={'yellow'}>Sign Up</Button>  
                             </Link>
                          </>) 
