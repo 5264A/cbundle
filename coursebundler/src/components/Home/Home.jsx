@@ -37,7 +37,7 @@ const Home = () => {
                   fontSize={'2xl'}
                   fontFamily="cursive"
                   textAlign={['center', 'left']}
-                  children="Find Valuable Content At 11₹ /-"
+                  children="Find Valuable content at reasonable price."
                 />
                 <Link to="/courses">
                   <Button size={'lg'} colorScheme = "yellow">
@@ -78,6 +78,7 @@ const Home = () => {
         <video
           muted
           autoPlay
+          loop
           controls
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
