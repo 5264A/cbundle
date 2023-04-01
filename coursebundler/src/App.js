@@ -19,9 +19,16 @@ import Subscribe from './components/payments/Subscribe';
 import PaymentSuccess from './components/payments/PaymentSuccess';
 import NotFound from './components/Layout/NotFound/NotFound';
 import PaymentFail from './components/payments/PaymentFail';
+import CoursePage from './components/CoursePage/CoursePage';
+import Profile from './components/Profile/Profile';
 
 
 function App() {
+
+    //  window.addEventListener("contextmenu" , (e)=>{
+    //      e.preventDefault();
+    //  })
+  
   return (
     <Router>
        <Header/>
@@ -29,9 +36,11 @@ function App() {
         <Route path='/' element = {<Home/>}/>
         <Route path='/courses' element = {<Courses/>}/>
         <Route path='/subscribe' element = {<Subscribe/>}/>
+        <Route path='/course/:id' element = {<CoursePage/>}/>
         <Route path='/paymentsuccess' element = {<PaymentSuccess/>}/>
         <Route path='/contact' element = {<Contact/>}/>
         <Route path='/request' element = {<Request/>}/>
+        <Route path='/profile' element = {<Profile/>}/>
         <Route path='/about' element = {<About/>}/>
         <Route path='/login' element = {<Login/>}/>
         <Route path='/register' element = {<Register/>}/>
