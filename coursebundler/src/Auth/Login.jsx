@@ -17,7 +17,7 @@ const Login = () => {
             id="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            placeholder="abc@gmail.com"
+            placeholder="radhe@gmail.com"
             type={'email'}
             focusBorderColor="yellow.500"
           />
