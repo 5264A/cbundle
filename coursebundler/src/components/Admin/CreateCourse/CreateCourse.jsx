@@ -3,7 +3,7 @@ import cursor from '../../../assets/images/cursor.png'
 import React from 'react'
 import Sidebar from '../Sidebar'
 import { useState } from 'react'
-import { fileUploadCss } from '../../../Auth/Register'
+import { fileUploadCss } from '../../Auth/Register'
 
 
 

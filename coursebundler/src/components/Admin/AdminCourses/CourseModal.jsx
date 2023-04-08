@@ -18,7 +18,7 @@ import {
   import React from 'react';
   import { useState } from 'react';
   import { RiDeleteBin7Fill } from 'react-icons/ri';
-  import { fileUploadCss } from '../../../Auth/Register';
+  import { fileUploadCss } from '../../Auth/Register';
   
   const CourseModal = ({
     isOpen,
