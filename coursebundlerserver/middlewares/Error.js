@@ -6,5 +6,5 @@ const ErrorMiddleware = (err,req,res,next) => {
         message:err.message
      })
 }
-
+// default export
 export default ErrorMiddleware
