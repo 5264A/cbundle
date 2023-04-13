@@ -13,7 +13,7 @@ import {
 //   import { buySubscription } from '../../redux/actions/user';
 //   import { server } from '../../redux/store';
 //   import toast from 'react-hot-toast';
-  import logo from '../../assets/images/logo.png';
+  // import logo from '../../assets/images/logo.png';
   
   const Subscribe = ({ user }) => {
     // const dispatch = useDispatch();
@@ -94,7 +94,7 @@ import {
           </Box>
           <Box p="4">
             <VStack textAlign={'center'} px="8" mt={'4'} spacing="8">
-              <Text children={`Join our one time membership and get any course on fixed price "Just 11₹ /-"`} />
+              <Text children={`Join our one time membership get access of all courses for life time..."`} />
               <Heading size="md" children={'₹299 Only'} />
             </VStack>
   

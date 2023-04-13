@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import "./Home.css";
-import vg from "../../assets/images/front1.png";
+import vg from "../../assets/images/logo.png";
 import introVideo from "../../assets/videos/intro.mp4"
 import { CgGoogle, CgYoutube } from 'react-icons/cg';
 import { SiCoursera, SiUdemy } from 'react-icons/si';
@@ -32,8 +32,9 @@ const Home = () => {
               alignItems = {['center','flex-end']}
               spacing="8"
               >
-                <Heading children = "GARIB-SIKSHHA" size={'2xl'}/>
+                <Heading color={'black'} children = "Welcome to Academate" size={'2xl'}/>
                 <Text
+                  color={'black'}
                   fontSize={'2xl'}
                   fontFamily="cursive"
                   textAlign={['center', 'left']}

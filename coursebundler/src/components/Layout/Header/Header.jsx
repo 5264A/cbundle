@@ -45,7 +45,7 @@ const Header = () => {
       <Drawer placement='left' onClose={onClose} isOpen={isOpen}>
          <DrawerOverlay backdropFilter={'blur(2px)'}/>
              <DrawerContent>
-                <DrawerHeader borderBottomWidth={'2px'}>Garib-Sikshha</DrawerHeader>
+                <DrawerHeader borderBottomWidth={'2px'}>Academate</DrawerHeader>
                   <DrawerBody>
                        <VStack spacing={'8'} alignItems={'flex-start'}>
                            <LinkButton url = '/' title =  "Home" onClose={onClose} />
