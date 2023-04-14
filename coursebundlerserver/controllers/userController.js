@@ -1,17 +1,14 @@
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
-import { User } from "../models/User.js";
-import { Course } from "../models/Course.js";
 import ErrorHandler from "../utils/errorHandler.js";
-import { sendEmail } from "../utils/sendEmail.js";
+import { User } from "../models/User.js";
 import { sendToken } from "../utils/sendToken.js";
+import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
+import { Course } from "../models/Course.js";
 import cloudinary from "cloudinary";
 import getDataUri from "../utils/dataUri.js";
 import { Stats } from "../models/Stats.js";
 
-// User Conltollers
-
-// register
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
   const file = req.file;
@@ -39,7 +36,6 @@ export const register = catchAsyncError(async (req, res, next) => {
   sendToken(res, user, "Registered Successfully", 201);
 });
 
-//login
 export const login = catchAsyncError(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -58,14 +54,13 @@ export const login = catchAsyncError(async (req, res, next) => {
   sendToken(res, user, `Welcome back, ${user.name}`, 200);
 });
 
-// logout
 export const logout = catchAsyncError(async (req, res, next) => {
   res
     .status(200)
     .cookie("token", null, {
       expires: new Date(Date.now()),
       httpOnly: true,
-      // secure: true,
+      secure: true,
       sameSite: "none",
     })
     .json({
@@ -74,7 +69,6 @@ export const logout = catchAsyncError(async (req, res, next) => {
     });
 });
 
-// get profile
 export const getMyProfile = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
 
@@ -84,7 +78,6 @@ export const getMyProfile = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// change password
 export const changePassword = catchAsyncError(async (req, res, next) => {
   const { oldPassword, newPassword } = req.body;
   if (!oldPassword || !newPassword)
@@ -106,7 +99,6 @@ export const changePassword = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// update profile
 export const updateProfile = catchAsyncError(async (req, res, next) => {
   const { name, email } = req.body;
 
@@ -123,7 +115,6 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// update profile picture
 export const updateprofilepicture = catchAsyncError(async (req, res, next) => {
   const file = req.file;
 
@@ -147,22 +138,23 @@ export const updateprofilepicture = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// forgetPassword
 export const forgetPassword = catchAsyncError(async (req, res, next) => {
   const { email } = req.body;
-  if (!email) return next(new ErrorHandler("Please Enter Email", 400));
+
   const user = await User.findOne({ email });
-  if (!user) return next(new ErrorHandler("User Not found", 400));
+
+  if (!user) return next(new ErrorHandler("User not found", 400));
+
   const resetToken = await user.getResetToken();
 
   await user.save();
 
-  // send token by email
   const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
   const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`;
 
-  await sendEmail(user.email, "Garib-Sikshha Reset Password", message);
+  // Send token via email
+  await sendEmail(user.email, "CourseBundler Reset Password", message);
 
   res.status(200).json({
     success: true,
@@ -170,7 +162,6 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// resetpassword
 export const resetPassword = catchAsyncError(async (req, res, next) => {
   const { token } = req.params;
 
@@ -201,7 +192,6 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
   });
 });
 
-//addtoplaylist
 export const addToPlaylist = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
 
@@ -228,7 +218,6 @@ export const addToPlaylist = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// remove from playlist
 export const removeFromPlaylist = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   const course = await Course.findById(req.query.id);
@@ -248,7 +237,6 @@ export const removeFromPlaylist = catchAsyncError(async (req, res, next) => {
 
 // Admin Controllers
 
-// get all users
 export const getAllUsers = catchAsyncError(async (req, res, next) => {
   const users = await User.find({});
 
@@ -258,7 +246,6 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// update role
 export const updateUserRole = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
@@ -275,7 +262,6 @@ export const updateUserRole = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// delete user
 export const deleteUser = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
@@ -293,7 +279,6 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// delete my profile
 export const deleteMyProfile = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user._id);
 
@@ -307,9 +292,6 @@ export const deleteMyProfile = catchAsyncError(async (req, res, next) => {
     .status(200)
     .cookie("token", null, {
       expires: new Date(Date.now()),
-      httpOnly: true,
-      // secure: true,
-      sameSite: "none",
     })
     .json({
       success: true,
