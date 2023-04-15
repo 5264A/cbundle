@@ -64,27 +64,25 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<Courses />} />
-            <Route path="/subscribe" element={<Subscribe />} />
-            <Route path="/course/:id" element={<CoursePage />} />
-            <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+
+            <Route
+              path="/course/:id"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <CoursePage user={user} />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path="/contact" element={<Contact />} />
             <Route path="/request" element={<Request />} />
+            <Route path="/about" element={<About />} />
+
             <Route
               path="/profile"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <Profile user={user} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <ProtectedRoute
-                  isAuthenticated={!isAuthenticated}
-                  redirect="/profile"
-                >
-                  <Login />
                 </ProtectedRoute>
               }
             />
@@ -104,8 +102,18 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
+
+            <Route
+              path="/login"
+              element={
+                <ProtectedRoute
+                  isAuthenticated={!isAuthenticated}
+                  redirect="/profile"
+                >
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/register"
               element={
@@ -117,13 +125,46 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/forgetpassword" element={<ForgetPassword />} />
-            <Route path="/resetpassword/:token" element={<ResetPassword />} />
-            <Route path="/paymentfail" element={<PaymentFail />} />
+            <Route
+              path="/forgetpassword"
+              element={
+                <ProtectedRoute
+                  isAuthenticated={!isAuthenticated}
+                  redirect="/profile"
+                >
+                  <ForgetPassword />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/resetpassword/:token"
+              element={
+                <ProtectedRoute
+                  isAuthenticated={!isAuthenticated}
+                  redirect="/profile"
+                >
+                  <ResetPassword />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/subscribe"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <Subscribe user={user} />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path="*" element={<NotFound />} />
 
-            {/* Admin routes */}
+            <Route path="/paymentsuccess" element={<PaymentSuccess />} />
 
+            <Route path="/paymentfail" element={<PaymentFail />} />
+
+            {/* Admin Routes */}
             <Route
               path="/admin/dashboard"
               element={
@@ -173,6 +214,7 @@ function App() {
               }
             />
           </Routes>
+
           <Footer />
           <Toaster />
         </>
