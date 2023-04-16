@@ -29,7 +29,14 @@ const Course = ({
   loading,
 }) => {
   return (
-    <VStack  className="course" alignItems={['center', 'flex-start']}>
+    <VStack
+      w={['full', '30%']}
+      boxShadow={'-5px 0 10px rgba(107,70,193,0.5)'}
+      p={'8'}
+      borderRadius={'lg'}
+      className="course"
+      alignItems={['center', 'flex-start']}
+    >
       <Image src={imageSrc} boxSize="60" objectFit={'contain'} />
       <Heading
         textAlign={['center', 'left']}
@@ -91,8 +98,8 @@ const Courses = () => {
   const dispatch = useDispatch();
 
   const addToPlaylistHandler = async couseId => {
-    // await dispatch(addToPlaylist(couseId));
-    // dispatch(loadUser());
+    await dispatch(addToPlaylist(couseId));
+    dispatch(loadUser());
   };
 
   const categories = [
