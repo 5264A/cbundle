@@ -1,33 +1,44 @@
-import { Box, Grid, HStack, Heading, Stack, Text ,Progress } from '@chakra-ui/react'
-import cursor from '../../../assets/images/cursor.png'
-import React from 'react'
-import Sidebar from '../Sidebar'
+import {
+  Box,
+  Grid,
+  Heading,
+  HStack,
+  Progress,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
+import React, { useEffect } from 'react';
 import { RiArrowDownLine, RiArrowUpLine } from 'react-icons/ri';
+import cursor from '../../../assets/images/cursor.png';
+import Sidebar from '../Sidebar';
 import { DoughnutChart, LineChart } from './Chart';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDashboardStats } from '../../../redux/actions/admin';
+import Loader from '../../Layout/Loader/Loader';
 
-const Databox = ({title,qty,qtyPercentage,profit}) => (
-     <Box
-     w={['full','20%']}
-     boxShadow={'-5px 0 10px rgba(107,70,193,0.5)'}
-     p={'8'}
-     borderRadius={'lg'}
-     >
-     <Text children={title} /> 
-      <HStack spacing={'6'}>
-         <Text fontSize={'2xl'} fontWeight={'bold'} children = {qty} />
-         <HStack>
-         <Text children={`${qtyPercentage}%`}/>
-         {
-            profit ? (
-               <RiArrowUpLine size={'35px'} color="green"/>
-            ) : (
-               <RiArrowDownLine size={'35px'} color="red"/>
-            )
-         };
-        </HStack> 
+const Databox = ({ title, qty, qtyPercentage, profit }) => (
+  <Box
+    w={['full', '20%']}
+    boxShadow={'-2px 0 10px rgba(107,70,193,0.5)'}
+    p="8"
+    borderRadius={'lg'}
+  >
+    <Text children={title} />
+
+    <HStack spacing={'6'}>
+      <Text fontSize={'2xl'} fontWeight="bold" children={qty} />
+
+      <HStack>
+        <Text children={`${qtyPercentage}%`} />
+        {profit ? (
+          <RiArrowUpLine color="green" />
+        ) : (
+          <RiArrowDownLine color="red" />
+        )}
       </HStack>
-      <Text opacity={'0.6'} children={'Since Last Month'}/>
-     </Box>
+    </HStack>
+    <Text opacity={0.6} children={'Since Last Month'} />
+  </Box>
 );
 
 const Bar = ({ title, value, profit }) => (
@@ -36,6 +47,7 @@ const Bar = ({ title, value, profit }) => (
 
     <HStack w="full" alignItems={'center'}>
       <Text children={profit ? '0%' : `-${value}%`} />
+
       <Progress w="full" value={profit ? value : 0} colorScheme="purple" />
       <Text children={`${value > 100 ? value : 100}%`} />
     </HStack>
@@ -43,23 +55,43 @@ const Bar = ({ title, value, profit }) => (
 );
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+
+  const {
+    loading,
+    stats,
+    viewsCount,
+    subscriptionCount,
+    usersCount,
+    subscriptionPercentage,
+    viewsPercentage,
+    usersPercentage,
+    subscriptionProfit,
+    viewsProfit,
+    usersProfit,
+  } = useSelector(state => state.admin);
+
+  useEffect(() => {
+    dispatch(getDashboardStats());
+  }, [dispatch]);
+
   return (
-   <Grid
+    <Grid
       css={{
         cursor: `url(${cursor}), default`,
       }}
       minH={'100vh'}
       templateColumns={['1fr', '5fr 1fr']}
     >
-      {false || false ? (
-        {/* <Loader color="purple.500" /> */}
+      {loading || !stats ? (
+        <Loader color="purple.500" />
       ) : (
         <Box boxSizing="border-box" py="16" px={['4', '0']}>
           <Text
             textAlign={'center'}
             opacity={0.5}
             children={`Last change was on ${
-              String(new Date()).split('G')[0]
+              String(new Date(stats[11].createdAt)).split('G')[0]
             }`}
           />
 
@@ -77,21 +109,21 @@ const Dashboard = () => {
           >
             <Databox
               title="Views"
-              qty={20}
-              qtyPercentage={30}
-              profit={true}
+              qty={viewsCount}
+              qtyPercentage={viewsPercentage}
+              profit={viewsProfit}
             />
             <Databox
               title="Users"
-              qty={30}
-              qtyPercentage={40}
-              profit={true}
+              qty={usersCount}
+              qtyPercentage={usersPercentage}
+              profit={usersProfit}
             />
             <Databox
               title="Subscription"
-              qty={40}
-              qtyPercentage={20}
-              profit={false}
+              qty={subscriptionCount}
+              qtyPercentage={subscriptionPercentage}
+              profit={subscriptionProfit}
             />
           </Stack>
 
@@ -110,7 +142,7 @@ const Dashboard = () => {
               ml={['0', '16']}
             />
 
-            <LineChart/>
+            <LineChart views={stats.map(item => item.views)} />
           </Box>
 
           <Grid templateColumns={['1fr', '2fr 1fr']}>
@@ -125,19 +157,19 @@ const Dashboard = () => {
 
               <Box>
                 <Bar
-                  profit={true}
+                  profit={viewsProfit}
                   title="Views"
-                  value={30}
+                  value={viewsPercentage}
                 />
                 <Bar
-                  profit={true}
+                  profit={usersProfit}
                   title="Users"
-                  value={40}
+                  value={usersPercentage}
                 />
                 <Bar
-                  profit={false}
+                  profit={subscriptionProfit}
                   title="Subscription"
-                  value={20}
+                  value={subscriptionPercentage}
                 />
               </Box>
             </Box>
@@ -146,7 +178,7 @@ const Dashboard = () => {
               <Heading textAlign={'center'} size="md" mb="4" children="Users" />
 
               <DoughnutChart
-               //  users={[subscriptionCount, usersCount - subscriptionCount]}
+                users={[subscriptionCount, usersCount - subscriptionCount]}
               />
             </Box>
           </Grid>
@@ -158,4 +190,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard
+export default Dashboard;

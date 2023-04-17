@@ -1,12 +1,4 @@
-import {
-  Button,
-  Container,
-  Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
-  VStack,
-} from '@chakra-ui/react';
+import { Button, Container, Heading, Input, VStack } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,9 +31,6 @@ const ResetPassword = () => {
     }
   }, [dispatch, error, message]);
 
-  const [show, setShow] = React.useState(false)
-  const handleClick = () => setShow(!show)
-
   return (
     <Container py={'16'} h="90vh">
       <form onSubmit={submitHandler}>
@@ -53,36 +42,20 @@ const ResetPassword = () => {
         />
 
         <VStack spacing={'8'}>
-          <InputGroup size="md">
-            <Input
-              type={show ? 'text' : 'password'}
-              required
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="New Password"
-              focusBorderColor="yellow.500"
-            />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
-                {show ? 'Hide' : 'Show'}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-
-          {/* <Input
+          <Input
             required
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder="New Password"
             type={'password'}
             focusBorderColor="yellow.500"
-          /> */}
+          />
 
           <Button
+            isLoading={loading}
             type="submit"
             w={'full'}
             colorScheme="yellow"
-            isLoading={loading}
           >
             Reset Password
           </Button>

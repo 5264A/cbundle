@@ -44,8 +44,8 @@ export const LineChart = ({ views = [] }) => {
     datasets: [
       {
         label: 'Views',
-        data: [1,2,3,4,5],
-        borderColor: 'rgba(107,70,193,0.8)',
+        data: views,
+        borderColor: 'rgba(107,70,193,0.5)',
         backgroundColor: '#6b46c1',
       },
     ],
@@ -60,9 +60,9 @@ export const DoughnutChart = ({ users = [] }) => {
     datasets: [
       {
         label: 'Views',
-        data: [20,20],
+        data: users,
         borderColor: ['rgb(62,12,171)', 'rgb(214,43,129)'],
-        backgroundColor: ['rgba(62,12,171,0.8)', 'rgba(214,43,129,0.8)'],
+        backgroundColor: ['rgba(62,12,171,0.3)', 'rgba(214,43,129,0.3)'],
         borderWidth: 1,
       },
     ],
@@ -90,11 +90,8 @@ function getLastYearMonths() {
   ];
 
   const currentMonth = new Date().getMonth();
-  
 
   const remain = 11 - currentMonth;
-
-
 
   for (let i = currentMonth; i < months.length; i--) {
     const element = months[i];

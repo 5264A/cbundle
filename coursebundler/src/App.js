@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { ChakraProvider, theme } from '@chakra-ui/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Header from './components/Layout/Header/Header';
@@ -218,7 +217,7 @@ function App() {
           <Footer />
           <Toaster
             toastOptions={{
-             duration: 7000,
+              duration: 7000,
             }}
           />
         </>
