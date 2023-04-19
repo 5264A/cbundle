@@ -27,7 +27,7 @@ import toast from 'react-hot-toast';
 
 const Users = () => {
   const { users, loading, error, message } = useSelector(state => state.admin);
-
+  const {user} = useSelector(state => state.user)
   const dispatch = useDispatch();
 
   const updateHandler = userId => {
@@ -91,6 +91,7 @@ const Users = () => {
                     key={item._id}
                     item={item}
                     loading={loading}
+                    adminuser={user._id}
                   />
                 ))}
             </Tbody>
@@ -105,7 +106,7 @@ const Users = () => {
 
 export default Users;
 
-function Row({ item, updateHandler, deleteButtonHandler, loading }) {
+function Row({ adminuser, item, updateHandler, deleteButtonHandler, loading }) {
   return (
     <Tr>
       <Td>#{item._id}</Td>
@@ -120,7 +121,9 @@ function Row({ item, updateHandler, deleteButtonHandler, loading }) {
 
       <Td isNumeric>
         <HStack justifyContent={'flex-end'}>
-          <Button
+         {
+           item._id !== adminuser ?
+           <Button
             onClick={() => updateHandler(item._id)}
             variant={'outline'}
             color="purple.500"
@@ -128,7 +131,19 @@ function Row({ item, updateHandler, deleteButtonHandler, loading }) {
           >
             Change Role
           </Button>
+          :
+          <Button
+            disabled="true"
+            variant={'outline'}
+            color="red.500"
+          >
+            Not Allowed
+          </Button>
+         }
+         
 
+         {
+          item._id !== adminuser ?
           <Button
             onClick={() => deleteButtonHandler(item._id)}
             color={'purple.600'}
@@ -136,6 +151,13 @@ function Row({ item, updateHandler, deleteButtonHandler, loading }) {
           >
             <RiDeleteBin7Fill />
           </Button>
+          :
+          <Button
+            color={'red.600'}
+          >
+            <RiDeleteBin7Fill />
+          </Button>
+         }
         </HStack>
       </Td>
     </Tr>

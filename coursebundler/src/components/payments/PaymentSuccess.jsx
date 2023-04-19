@@ -14,7 +14,7 @@ const PaymentSuccess = () => {
   const reference = useSearchParams()[0].get('reference');
 
   return (
-    <Container h="90vh" p="16">
+    <Container h="95vh" p="16">
       <Heading my="8" textAlign={'center'}>
         You have Pro Pack
       </Heading>
@@ -30,7 +30,7 @@ const PaymentSuccess = () => {
         </Box>
 
         <Box p="4">
-          <VStack textAlign={'center'} px="8" mt="4" spacing={'8'}>
+          <VStack textAlign={'center'} px="8" mt="4"  spacing={'8'}>
             <Text>
               Congratulation you're a pro member. You have access to premium
               content.
@@ -43,10 +43,10 @@ const PaymentSuccess = () => {
         </Box>
 
         <Link to="/profile">
-          <Button variant={'ghost'}>Go to profile</Button>
+          <Button bg={'yellow.500'} variant={'ghost'}>Go to profile</Button>
         </Link>
 
-        <Heading size={'xs'}>Reference: {reference}</Heading>
+        <Heading  size={'xs'}>Reference: {reference}</Heading>
       </VStack>
     </Container>
   );

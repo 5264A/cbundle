@@ -75,7 +75,7 @@ function App() {
 
             <Route path="/contact" element={<Contact />} />
             <Route path="/request" element={<Request />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/about" element={<About user={user} />} />
 
             <Route
               path="/profile"
@@ -217,7 +217,7 @@ function App() {
           <Footer />
           <Toaster
             toastOptions={{
-              duration: 7000,
+              duration: 5000,
             }}
           />
         </>

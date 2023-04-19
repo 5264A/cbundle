@@ -1,6 +1,6 @@
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../utils/errorHandler.js";
-import { sendEmail } from "../utils/sendEmail.js";
+import { sendEmailContactRequest } from "../utils/sendEmailContactRequest.js";
 import { Stats } from "../models/Stats.js";
 
 export const contact = catchAsyncError(async (req, res, next) => {
@@ -14,7 +14,7 @@ export const contact = catchAsyncError(async (req, res, next) => {
   const subject = "Contact from Academate";
   const text = `I am ${name} my email is ${email}. \n${message}`;
 
-  await sendEmail(to, subject, text);
+  await sendEmailContactRequest(to, subject, text);
 
   res.status(200).json({
     success: true,
@@ -33,7 +33,7 @@ export const courseRequest = catchAsyncError(async (req, res, next) => {
   const subject = "Course Request from Academate";
   const text = `I am ${name} my email is ${email}. \n${course}`;
 
-  await sendEmail(to, subject, text);
+  await sendEmailContactRequest(to, subject, text);
 
   res.status(200).json({
     success: true,

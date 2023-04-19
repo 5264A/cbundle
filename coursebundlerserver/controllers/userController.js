@@ -149,17 +149,46 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
 
   await user.save();
 
-  const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+  // const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
-  const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`;
+  // const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`;
+
+   const resetPasswordUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+
+  // const resetPasswordUrl = `${req.protocol}://${req.get(
+  //   "host"
+  // )}/resetpassword/${resetToken}`;
+
+  const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
 
   // Send token via email
-  await sendEmail(user.email, "CourseBundler Reset Password", message);
 
-  res.status(200).json({
-    success: true,
-    message: `Reset Token has been sent to ${user.email}`,
-  });
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: `Academate Password Recovery`,
+      message,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `Email sent to ${user.email} successfully`,
+    });
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+
+    return next(new ErrorHandler(error.message, 500));
+  }
+
+  // await sendEmail(user.email, "CourseBundler Reset Password", message);
+
+  // res.status(200).json({
+  //   success: true,
+  //   message: `Reset Token has been sent to ${user.email}`,
+  // });
 });
 
 export const resetPassword = catchAsyncError(async (req, res, next) => {

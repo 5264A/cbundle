@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import introVideo from '../../assets/videos/intro.mp4';
 import termsAndCondition from '../../assets/docs/termsAndCondition';
 import profile from '../../assets/images/Profile.jpg';
+
 const Founder = () => (
   <Stack direction={['column', 'row']} spacing={['4', '16']} padding={'8'}>
     <VStack>
@@ -75,7 +76,7 @@ const TandC = ({ termsAndCondition }) => (
   </Box>
 );
 
-const About = () => {
+const About = ({user}) => {
   return (
     <Container maxW={'container.lg'} padding="16" boxShadow={'lg'}>
       <Heading children="About Us" textAlign={['center', 'left']} />
@@ -86,11 +87,20 @@ const About = () => {
           only for premium users.
         </Text>
 
+        {
+          (user && user.subscription && user.subscription.status === 'active') || (user && user.role === 'admin') ? 
+          <Link to="/profile">
+          <Button variant={'ghost'}  colorScheme="green">
+            You Already Subscribed 
+          </Button>
+        </Link>
+        :
         <Link to="/subscribe">
           <Button variant={'ghost'} colorScheme="yellow">
             Checkout Our Plan
           </Button>
         </Link>
+        }
       </Stack>
 
       <VideoPlayer />
