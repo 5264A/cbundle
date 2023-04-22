@@ -36,5 +36,5 @@ SMPT_PASSWORD=
 SMPT_HOST=
 SMPT_PORT=
 
-and after that run command npm i on server side , after that run command  `npm run dev` to run the server.
-after it same run npm i in frontend side and run npm start to run fronted 
+and after that run command `npm i` on server side , after that run command  `npm run dev` to run the server.
+after it same run `npm i` in frontend side and run `npm start` to run fronted 
